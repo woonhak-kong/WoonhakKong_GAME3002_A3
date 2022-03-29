@@ -596,6 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90cc1beec6929e94b8caf9a4c86fc036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 60
   MaxSpeed: 10
   JumpPower: 25
   CurrentState: 0
@@ -658,7 +659,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1527693544}
-  m_Material: {fileID: 13400000, guid: f93864c68c725f049a464b366d1be95a, type: 2}
+  m_Material: {fileID: 13400000, guid: 88cd02d887735a04f9172e62201e0bdc, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -723,7 +724,7 @@ Transform:
   m_GameObject: {fileID: 1527693544}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 713098291}
   m_RootOrder: 0

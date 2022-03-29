@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    public float Speed;
     public float MaxSpeed;
     public float JumpPower;
     public PlayerState CurrentState;
@@ -63,7 +64,7 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        _rigidbody.AddForce(new Vector3(_inputVector.x * 500.0f, 0, 0), ForceMode.Force);
+        _rigidbody.AddForce(new Vector3(_inputVector.x * Speed, 0, 0), ForceMode.Force);
 
         if (_rigidbody.velocity.x > MaxSpeed)
         {
@@ -79,14 +80,17 @@ public class Player : MonoBehaviour
     {
         if (_inputVector.y > 0)
         {
+            
             if (CurrentJumpState == PlayerJumpState.GROUND)
             {
                 CurrentJumpState = PlayerJumpState.JUMP1;
+                _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0.0f, _rigidbody.velocity.z);
                 _rigidbody.AddForce(new Vector3(0, _inputVector.y * JumpPower, 0), ForceMode.Impulse);
             }
             else if (CurrentJumpState == PlayerJumpState.JUMP1)
             {
                 CurrentJumpState = PlayerJumpState.JUMP2;
+                _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0.0f, _rigidbody.velocity.z);
                 _rigidbody.AddForce(new Vector3(0, _inputVector.y * JumpPower, 0), ForceMode.Impulse);
             }
             else if (CurrentJumpState == PlayerJumpState.JUMP2)
@@ -105,8 +109,11 @@ public class Player : MonoBehaviour
     {
         if (_rigidbody.velocity.y > 0)
             return;
+        if (CurrentJumpState == PlayerJumpState.GROUND)
+            return;
+
         RaycastHit hit;
-        bool isThere = Physics.Raycast(GroundSensor.position, GroundSensor.up, out hit, 5.0f);
+        bool isThere = Physics.Raycast(GroundSensor.position, GroundSensor.up, out hit, 1.0f);
         if (isThere && hit.collider.tag == "Ground")
         {
             CurrentJumpState = PlayerJumpState.GROUND;
@@ -116,7 +123,7 @@ public class Player : MonoBehaviour
 
     private void OnMove(InputValue value)
     {
-        print(value.Get<Vector2>().x + ", " + value.Get<Vector2>().y);
+        //print(value.Get<Vector2>().x + ", " + value.Get<Vector2>().y);
         _inputVector.x = value.Get<Vector2>().x;
     }
 
@@ -126,6 +133,23 @@ public class Player : MonoBehaviour
         _inputVector.y = value.Get<float>();
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        print("enter - trans" + _rigidbody.velocity.y);
+
+        if (collision.transform.tag == "Ground" && CurrentJumpState != PlayerJumpState.GROUND)
+        {
+            RaycastHit hit;
+            bool isThere = Physics.Raycast(GroundSensor.position, GroundSensor.up, out hit, 1.0f);
+            if (isThere && hit.collider.tag == "Ground")
+            {
+                CurrentJumpState = PlayerJumpState.GROUND;
+            }
+        }
+
+
+       // CheckGround();
+    }
 
     private void OnCollisionStay(Collision collision)
     {
@@ -137,6 +161,6 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(GroundSensor.position, GroundSensor.position + GroundSensor.up * 5.0f);
+        Gizmos.DrawLine(GroundSensor.position, GroundSensor.position + GroundSensor.up * 1.0f);
     }
 }
