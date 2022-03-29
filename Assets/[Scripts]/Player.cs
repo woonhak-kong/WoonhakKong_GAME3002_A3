@@ -135,7 +135,6 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        print("enter - trans" + _rigidbody.velocity.y);
 
         if (collision.transform.tag == "Ground" && CurrentJumpState != PlayerJumpState.GROUND)
         {
