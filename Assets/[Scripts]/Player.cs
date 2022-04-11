@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     public float GravityScale;
     public Transform GroundSensor;
 
+    public bool BlueKey = false;
+    public bool BlackKey = false;
+
 
     private Rigidbody _rigidbody;
     private Vector2 _inputVector;

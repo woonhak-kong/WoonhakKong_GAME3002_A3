@@ -25,7 +25,10 @@ public class SpeedUpZone : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        other.gameObject.GetComponent<Player>().MaxSpeed = prevMaxSpeed;
-        other.gameObject.GetComponent<Player>().Speed = prevSpeed;
+        if (other.transform.tag == "Player")
+        {
+            other.gameObject.GetComponent<Player>().MaxSpeed = prevMaxSpeed;
+            other.gameObject.GetComponent<Player>().Speed = prevSpeed;
+        }
     }
 }
