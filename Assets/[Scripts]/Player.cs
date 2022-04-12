@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
 
     private void OnJump(InputValue value)
     {
-        print(value.Get<float>());
+        //print(value.Get<float>());
         _inputVector.y = value.Get<float>();
     }
 
@@ -164,5 +164,19 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(GroundSensor.position, GroundSensor.position + GroundSensor.up * 1.0f);
+    }
+
+    public void Die()
+    {
+        FindObjectOfType<PlaySceneUIController>().SetGameOver();
+        FindObjectOfType<Timer>().SetIsPlaying(false);
+        Destroy(gameObject);
+    }
+
+    public void GameClear()
+    {
+        FindObjectOfType<PlaySceneUIController>().SetGameClear();
+        FindObjectOfType<Timer>().SetIsPlaying(false);
+        Destroy(gameObject);
     }
 }

@@ -10,6 +10,7 @@ public class KillingSpike : MonoBehaviour
         if (other.transform.tag == "Player")
         {
             print("Kill Player");
+            other.GetComponent<Player>().Die();
         }
 
     }

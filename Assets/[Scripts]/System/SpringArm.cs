@@ -15,8 +15,11 @@ public class SpringArm : MonoBehaviour
 
     void LateUpdate()
     {
-        Vector3 DestinationPosition = Target.position + OffsetFromTarget;
-        //transform.position = Vector3.Lerp(transform.position, Destination,  Time.deltaTime);
-        transform.position = Vector3.SmoothDamp(transform.position, DestinationPosition, ref _velocity, LagFactor);
+        if (Target != null)
+        {
+            Vector3 DestinationPosition = Target.position + OffsetFromTarget;
+            //transform.position = Vector3.Lerp(transform.position, Destination,  Time.deltaTime);
+            transform.position = Vector3.SmoothDamp(transform.position, DestinationPosition, ref _velocity, LagFactor);
+        }
     }
 }
